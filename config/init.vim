@@ -58,12 +58,12 @@ let g:loaded_netrwSettings = 1
 let g:loaded_netrwFileHandlers = 1
 
 " Set main configuration directory as parent directory
-let $VIM_PATH =
+let $VIMPATH =
 	\ get(g:, 'etc_vim_path',
 	\   exists('*stdpath') ? stdpath('config') :
 	\   ! empty($MYVIMRC) ? fnamemodify(expand($MYVIMRC, 1), ':h') :
 	\   ! empty($VIMCONFIG) ? expand($VIMCONFIG, 1) :
-	\   ! empty($VIM_PATH) ? expand($VIM_PATH, 1) :
+	\   ! empty($VIMPATH) ? expand($VIMPATH, 1) :
 	\   fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
 	\ )
 
@@ -73,12 +73,12 @@ let $DATA_PATH =
 
 " Collection of user plugin list config file-paths
 let s:config_paths = get(g:, 'etc_config_paths', [
-	\ $VIM_PATH . '/config/plugins.yaml',
-	\ $VIM_PATH . '/config/local.plugins.yaml',
-	\ $VIM_PATH . '/usr/vimrc.yaml',
-	\ $VIM_PATH . '/usr/vimrc.json',
-	\ $VIM_PATH . '/vimrc.yaml',
-	\ $VIM_PATH . '/vimrc.json',
+	\ $CFGPATH . 'plugins.yaml',
+	\ $CFGPATH . 'local.plugins.yaml',
+	\ $VIMPATH . '/usr/vimrc.yaml',
+	\ $VIMPATH . '/usr/vimrc.json',
+	\ $VIMPATH .  '/vimrc.yaml',
+	\ $VIMPATH . '/vimrc.json',
 	\ ])
 
 " Filter non-existent config paths
@@ -87,9 +87,9 @@ call filter(s:config_paths, 'filereadable(v:val)')
 function! s:main()
 	if has('vim_starting')
 		" When using VIMINIT trick for exotic MYVIMRC locations, add path now.
-		if &runtimepath !~# $VIM_PATH
-			set runtimepath^=$VIM_PATH
-			set runtimepath+=$VIM_PATH/after
+		if &runtimepath !~# $VIMPATH
+			set runtimepath^=$VIMPATH
+			set runtimepath+=$VIMPATH/after
 		endif
 
 		" Ensure data directories
@@ -99,7 +99,7 @@ function! s:main()
 				\ $DATA_PATH . '/backup',
 				\ $DATA_PATH . '/session',
 				\ $DATA_PATH . '/swap',
-				\ $VIM_PATH . '/spell' ]
+				\ $VIMPATH . '/spell' ]
 			if ! isdirectory(s:path)
 				call mkdir(s:path, 'p', 0770)
 			endif
@@ -138,7 +138,9 @@ function! s:use_dein()
 		" Use dein as a plugin manager
 		let g:dein#auto_recache = 1
 		let g:dein#install_max_processes = 12
-
+    let g:dein#install_progress_type = 'title'
+    let g:dein#enable_notification = v:true
+    let g:dein#lazy_rplugins = v:true
 		" Add dein to vim's runtimepath
 		if &runtimepath !~# '/dein.vim'
 			let s:dein_dir = l:cache_path . '/repos/github.com/Shougo/dein.vim'
@@ -176,8 +178,8 @@ function! s:use_dein()
 		endfor
 
 		" Add any local ./dev plugins
-		if isdirectory($VIM_PATH . '/dev')
-			call dein#local($VIM_PATH . '/dev', { 'frozen': 1, 'merged': 0 })
+		if isdirectory($VIMPATH . '/dev')
+			call dein#local($VIMPATH . '/dev', { 'frozen': 1, 'merged': 0 })
 		endif
 		call dein#end()
 

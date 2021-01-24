@@ -90,3 +90,6 @@ if &buftype ==# 'help'
 endif
 
 let &cpoptions = s:save_cpo
+
+
+" vim: set filetype=vim foldmethod=marker foldlevel=0 nowrap:

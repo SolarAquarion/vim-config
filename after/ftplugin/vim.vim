@@ -20,3 +20,5 @@ setlocal suffixesadd=.vim
 setlocal includeexpr=fnamemodify(substitute(v:fname,'#','/','g'),':h')
 
 let &cpoptions = s:save_cpo
+
+" vim: set filetype=vim foldmethod=marker foldlevel=0 nowrap:

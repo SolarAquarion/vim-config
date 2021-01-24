@@ -1,8 +1,9 @@
 " Neo/vim Settings
 " ===
 
+" 
+
 " General {{{
-set mouse=nv                 " Disable mouse in command-line mode
 set modeline                 " automatically setting options from modelines
 set report=2                 " Report on line changes
 set errorbells               " Trigger bell on error
@@ -26,46 +27,14 @@ if has('vim_starting')
 	scriptencoding utf-8
 endif
 
-" What to save for views and sessions:
-set viewoptions=folds,cursor,curdir,slash,unix
-set sessionoptions=curdir,help,tabpages,winsize
-
-if has('mac') && has('vim_starting')
-	let g:clipboard = {
-		\   'name': 'macOS-clipboard',
-		\   'copy': {
-		\      '+': 'pbcopy',
-		\      '*': 'pbcopy',
-		\    },
-		\   'paste': {
-		\      '+': 'pbpaste',
-		\      '*': 'pbpaste',
-		\   },
-		\   'cache_enabled': 0,
-		\ }
-endif
 
 if has('clipboard') && has('vim_starting')
 	" set clipboard& clipboard+=unnamedplus
 	set clipboard& clipboard^=unnamed,unnamedplus
 endif
 
-" }}}
-" Wildmenu {{{
-" --------
-if has('wildmenu')
-	if ! has('nvim')
-		set nowildmenu
-		set wildmode=list:longest,full
-	endif
-	set wildignorecase
-	set wildignore+=.git,.hg,.svn,.stversions,*.pyc,*.spl,*.o,*.out,*~,%*
-	set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store
-	set wildignore+=**/node_modules/**,**/bower_modules/**,*/.sass-cache/*
-	set wildignore+=__pycache__,*.egg-info,.pytest_cache,.mypy_cache/**
-endif
-
-" }}}
+"
+"}}}
 " Vim Directories {{{
 " ---------------
 set undofile swapfile nobackup
@@ -73,10 +42,7 @@ set directory=$DATA_PATH/swap//,$DATA_PATH,~/tmp,/var/tmp,/tmp
 set undodir=$DATA_PATH/undo//,$DATA_PATH,~/tmp,/var/tmp,/tmp
 set backupdir=$DATA_PATH/backup/,$DATA_PATH,~/tmp,/var/tmp,/tmp
 set viewdir=$DATA_PATH/view/
-set spellfile=$VIM_PATH/spell/en.utf-8.add
-
-" History saving
-set history=2000
+set spellfile=$VIMPATH/spell/en.utf-8.add
 
 if has('nvim') && ! has('win32') && ! has('win64')
 	set shada=!,'100,<20,@100,s10,h,r/tmp,r/private/var
@@ -142,17 +108,19 @@ if exists('&breakindent')
 	set breakindentopt=shift:2,min:20
 endif
 
-" }}}
+"
+"}}}
 " Timing {{{
 " ------
 set timeout ttimeout
 set timeoutlen=500   " Time out on mappings
 set ttimeoutlen=10   " Time out on key codes
-set updatetime=400   " Idle time to write swap and trigger CursorHold
+set updatetime=100   " Idle time to write swap and trigger CursorHold
 set redrawtime=2000  " Time in milliseconds for stopping display redraw
 
 " }}}
-" Searching {{{
+"
+"Searching {{{
 " ---------
 set ignorecase    " Search ignoring case
 set smartcase     " Keep case when searching with *
@@ -175,6 +143,7 @@ elseif executable('ag')
 	let &grepprg =
 		\ 'ag --vimgrep' . (&smartcase ? ' --smart-case' : '') . ' --'
 endif
+
 
 " }}}
 " Behavior {{{
@@ -279,4 +248,110 @@ endif
 
 " }}}
 
-" vim: set foldmethod=marker ts=2 sw=2 tw=80 noet :
+" turn on mouse in all modes
+if has('mouse')
+  set mouse=a
+  set mousemodel=popup_setpos
+endif
+
+" use utf-8 without BOM
+set encoding=utf-8
+set fileencoding=utf-8
+set termencoding=utf-8
+set nobomb
+
+
+" flush file to disk after writing for protection against data loss
+set nofsync
+
+" prefer blowfish2 encryption method
+silent! set cryptmethod=blowfish2
+
+" greatly restrict local .vimrc and .exrc files
+set secure
+
+" disable modelines, use securemodelines.vim instead
+set nomodeline
+
+
+" What to save for views and sessions:
+set viewoptions=folds,cursor,curdir,slash,unix
+
+" switching buffers
+set switchbuf=useopen,usetab,newtab
+"             |       |      |
+"             |       |      +-------- Prefer opening quickfix windows in new tabs
+"             |       +--------------- Consider windows in other tab pages wrt useopen
+"             +----------------------- Jump to first open window with specified buffer
+
+" save and restore session data
+set sessionoptions+=blank,buffers,curdir,folds
+"                   |     |       |      |
+"                   |     |       |      +------- Manually created folds, opened/closed folds, local fold options
+"                   |     |       +-------------- The current directory
+"                   |     +---------------------- Hidden and unloaded buffers
+"                   +---------------------------- Empty windows
+set sessionoptions+=globals,help,localoptions,options
+"                   |       |    |            |
+"                   |       |    |            +--------- All options and mappings, global values for local options
+"                   |       |    +---------------------- Options and mappings local to a window or buffer
+"                   |       +--------------------------- The help window
+"                   +----------------------------------- Global variables that start with an uppercase letter and contain at least one lowercase letter
+set sessionoptions+=resize,tabpages,winpos,winsize
+"                   |      |        |      |
+"                   |      |        |      +--------- Window sizes
+"                   |      |        +---------------- Position of Vim window
+"                   |      +------------------------- All tab pages
+"                   +-------------------------------- Size of Vim window
+
+" configure viminfo then read from it
+set viminfo='100,<50,s10,h,!
+"           |    |   |   | |
+"           |    |   |   | +--- Save and restore all-uppercase global variables
+"           |    |   |   +----- Don't restore hlsearch on startup
+"           |    |   +--------- Exclude registers greater than N Kb
+"           |    +------------- Keep N lines for each register
+"           +------------------ Keep marks for N files
+
+
+
+
+" never write or update the contents of any buffer unless we say so
+set autowrite
+set autowriteall
+set autoread
+
+" read unix, dos and mac file formats
+set fileformats=unix,dos,mac
+
+" save undo history to an undo file
+set undofile
+" allow N number of changes to be undone
+set undolevels=500
+
+" store N previous vim commands and search patterns
+set history=2000
+
+" switch buffers without saving
+set hidden
+
+" write swap file every N characters
+set updatecount=20
+
+" do not redraw screen when executing macros
+set lazyredraw
+
+" improve redraw performance
+set ttyfast
+
+" make syntax highlighting more robust post vim 8
+set redrawtime=10000
+
+" terminal type for mouse codes
+silent! set ttymouse=xterm2
+
+" format lines with fmt
+set formatprg=fmt
+
+" vim: set filetype
+" =vim foldmethod=marker foldlevel=0 nowrap:
