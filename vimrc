@@ -158,7 +158,7 @@ set backup
 set backupdir   =$HOME/.vim/files/backup/
 set backupext   =-vimbackup
 set backupskip  =
-set directory   =$HOME/.vim/files/swap//
+set directory   =$HOME/.vim/files/swap/
 set updatecount =100
 set undofile
 set undodir     =$HOME/.vim/files/undo/
@@ -167,7 +167,7 @@ set viminfo     ='100,n$HOME/.vim/files/info/viminfo
 set diffopt      +=vertical,foldcolumn:0,indent-heuristic,algorithm:patience
 if !isdirectory($HOME . "/.vim/files/swap") | call mkdir($HOME . "/.vim/files/swap", "p") | endif
 if !isdirectory($HOME. "/.vim/files/undo") | call mkdir($HOME . "/.vim/files/undo", "p") | endif
-
+if !isdirectory($HOME. '/.vim/files/backup') | call mkdir($HOME . "/.vim/files/backup", 'p') | endif
 " The fish shell is not very compatible to other shells and unexpectedly
 " breaks things that use 'shell'.
 if &shell =~# 'fish$'
