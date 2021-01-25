@@ -18,6 +18,9 @@ call denite#custom#option('_', {
 	\ 'max_dynamic_update_candidates': 30000,
 	\ })
 
+" Remove date from buffer list
+call denite#custom#var('buffer', 'date_format', '')
+
 " Use Neovim's floating window
 if has('nvim-0.4')
 	highlight! DeniteBackground ctermfg=250 ctermbg=237 guifg=#ACAFAE guibg=#2C3237
@@ -71,6 +74,15 @@ function! s:denite_resize(position)
 	else
 		" Use Denite default, which is centered.
 	endif
+endfunction
+
+" Loop through denite options and enable them
+function! s:profile(opts) abort
+  for l:fname in keys(a:opts)
+    for l:dopt in keys(a:opts[l:fname])
+      call denite#custom#option(l:fname, l:dopt, a:opts[l:fname][l:dopt])
+    endfor
+  endfor
 endfunction
 
 " Set Denite's window position

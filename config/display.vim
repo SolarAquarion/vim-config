@@ -65,6 +65,9 @@ set pumheight=20
 " make help window more likely to open at half existing window height
 set helpheight=12
 
+if has('nvim')
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
 
 " highlighting {{{
 
@@ -181,9 +184,6 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " end highlighting }}}
 " window title {{{
-
-" colorscheme
-silent! colorscheme base16-material
 
 set title
 if has('title') && (&title || has('gui_running'))

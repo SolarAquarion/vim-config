@@ -564,13 +564,5 @@ let s:denite_options = {'default' : {
 \ 'vertical_preview': 1
 \ }}
 
-" Loop through denite options and enable them
-function! s:profile(opts) abort
-  for l:fname in keys(a:opts)
-    for l:dopt in keys(a:opts[l:fname])
-      call denite#custom#option(l:fname, l:dopt, a:opts[l:fname][l:dopt])
-    endfor
-  endfor
-endfunction
 
 

@@ -9,11 +9,16 @@
 - repo: haya14busa/dein-command.vim
 - repo: thinca/vim-localrc
 - repo: Shougo/context_filetype.vim
-- { repo: Shougo/vimproc.vim, build: make }
+- { repo: Shougo/vimproc.vim, build: make, merged: 0 }
 - repo: jaawerth/nrun.vim
+
+# Colorschemes
 - { repo: rafi/awesome-vim-colorschemes, merged: 0 }
+- { repo: jacoborus/tender.vim, merged: 0}
 
 - { repo: ajmwagar/vim-deus, merged: 0 }
+
+#Editor Settings
 - repo: sgur/vim-editorconfig
   hook_add: |-
     let g:editorconfig_verbose = 1
@@ -41,6 +46,8 @@
 # GUI only:
 - { repo: equalsraf/neovim-gui-shim, if: has('gui_running') }
 
+- repo: vim-scripts/CSApprox
+
 # Vim8 only:
 - { repo: roxma/nvim-yarp, if: "! has('nvim')", depends: vim-hug-neovim-rpc }
 - { repo: roxma/vim-hug-neovim-rpc, if: "! has('nvim')" }
@@ -54,8 +61,8 @@
 - { repo: othree/csscomplete.vim, on_ft: css }
 - { repo: cakebaker/scss-syntax.vim, on_ft: [ scss, sass ]}
 - { repo: groenewege/vim-less, on_ft: less }
-- { repo: iloginow/vim-stylus, on_ft: stylus }  # or wavded/vim-stylus ?
-- { repo: mustache/vim-mustache-handlebars, on_ft: [html, mustache, handlebars]}
+- { repo: iloginow/vim-stylus, on_ft: stylus }  # or wavded/vim-stylus
+- { repo: mustache/vim-mustache-handlebars, on_ft: [ html, mustache, handlebars ]}
 - { repo: digitaltoad/vim-pug, on_ft: [ pug, jade ]}
 
 - repo: othree/html5.vim
@@ -168,9 +175,7 @@
 - repo: sheerun/vim-polyglot
   build: make
 
-- repo: tyru/caw.vim
 - repo: preservim/tagbar
-- repo: ludovicchabant/vim-gutentags
 
 - repo: preservim/nerdcommenter
   hook_add: |-
@@ -182,8 +187,8 @@
     let g:NERDCommentEmptyLines = 1
     let g:NERDTrimTrailingWhitespace = 1
     let g:NERD_c_alt_style = 1
-    let g:NERDCustomDelimiters = {'c': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' }}
     let g:ft = ''
+  hook_source: source $CFGPATH/plugins/nerdcommentary.vim
 
 - repo: pearofducks/ansible-vim
   on_ft: [ ansible, ansible_hosts, jinja2 ]
@@ -232,7 +237,7 @@
 - repo: lambdalisue/gina.vim
   on_cmd: Gina
   on_ft: [ gitcommit, gitrebase ]
-  hook_source: source $CFGPATH/config/plugins/gina.vim
+  hook_source: source $CFGPATH/plugins/gina.vim
 
 - repo: mhinz/vim-grepper
   on_map: { nx: <Plug> }
@@ -247,8 +252,6 @@
         \ }}
 
 - repo: wsdjeg/FlyGrep.vim
-
-- {repo: wincent/command-t, build: 'rake make', merged:0}
 
 - {repo: Yggdroot/LeaderF, do: ':LeaderInstallCExtension', merged:0 }
 
@@ -325,9 +328,12 @@
   on_cmd: [ Files, GitFiles, Buffers, Lines, Locate, Colors, Ag, Rg, Tags ]
   on_func: [ fzf#vim#with_preview, fzf#run, vista#finder#fzf#Run ]
 
-- {repo: yuki-ycino/fzf-preview.vim, rev: release/rpc}
+- repo: yuki-ycino/fzf-preview.vim
+  rev: release/rpc
+  hook_source: source $CFGPATH/plugins/FzFPreview.vim 
 
 - repo: ctrlpvim/ctrlp.vim
+  hook_source: source $CFGPATH/plugins/ctrlp.vim
 
 - repo: wincent/command-t
   build: "rake make"
@@ -482,7 +488,7 @@
 # ==========================================
 # Powerline and other such ricing
 # ----------
-- repo: yanoasis/vim-devicons
+- repo: ryanoasis/vim-devicons
 
 - repo: mhinz/vim-startify
 
@@ -490,7 +496,7 @@
 
 - repo: vim-airline/vim-airline
   hook_add: |-
-    let g:airline#extensions#tabline#enabled = 0
+    let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#fugitiveline#enabled = 1
     let g:airline#extensions#tabline#formatter = 'default'
     let g:airline_powerline_fonts = 1
@@ -524,7 +530,7 @@
 
 - repo: jackguo380/vim-lsp-cxx-highlight
 
-- repo: neocline/coc-neco
+- repo: neoclide/coc-neco
 
 - {repo: neoclide/coc-snippets, build: 'npm install --frozen-lockfile'}
 
@@ -540,7 +546,6 @@
     let g:ale_lint_on_insert_leave = 1
     let g:ale_cache_executable_check_failures = 1
 
-- repo: iyuuya/denite-ale
 - repo: vn-ki/coc-clap
 
 - repo: neoclide/coc-denite
@@ -672,7 +677,8 @@
 # Nerdtree
 # --------
 - repo: preservim/nerdtree
-   hook_add: |-
+  hook_source: source $CFGPATH/plugins/nerdtree.vim
+  hook_add: |-
       let NERDTreeDirArrows=1
       let NERDTreeQuitOnOpen = 1
       let NERDTreeShowBookmarks=1

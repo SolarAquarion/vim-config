@@ -1,12 +1,15 @@
 {
+  "codeLens.enable": true,
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "diagnostic.virtualText": true,
-  "coc.preferences.colorSupport": true,
   "diagnostic.refreshOnInsertMode": true,
   "diagnostic.displayByAle": true,
   "clangd.semanticHighlighting": true,
   "diagnostic.checkCurrentLine": true,
   "explorer.icon.enableNerdfont": true,
+  "suggest.triggerAfterInsertEnter": true,
+  "suggest.enablePreview": true,
+
    "languageserver": {
         "bash": {
             "args": [

@@ -1,3 +1,6 @@
+let g:NERDCustomDelimiters = {'c': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' }}
+
+
 fu! NERDCommenter_before()
   if &filetype ==# 'markdown'
     let g:ft = 'markdown'

@@ -4,15 +4,15 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/.vim
+cd ~/.vim/config
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
 argglobal
 %argdel
-$argadd vimrc
-edit vimrc
+$argadd plugins/coc.vim
+edit plugins/coc.vim
 set splitbelow splitright
 set nosplitbelow
 set nosplitright
@@ -30,19 +30,19 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 170 - ((15 * winheight(0) + 15) / 30)
+let s:l = 1 - ((0 * winheight(0) + 13) / 26)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 170
-normal! 091|
+keepjumps 1
+normal! 0
 tabnext 1
-badd +0 vimrc
+badd +0 plugins/coc.vim
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
 endif
 unlet! s:wipebuf
-set winheight=1 winwidth=20 shortmess=filnxtToOSc
+set winheight=1 winwidth=20 shortmess=filnxtToOSAcI
 set winminheight=1 winminwidth=1
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)

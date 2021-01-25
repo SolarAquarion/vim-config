@@ -73,8 +73,8 @@ let $DATA_PATH =
 
 " Collection of user plugin list config file-paths
 let s:config_paths = get(g:, 'etc_config_paths', [
-	\ $CFGPATH . 'plugins.yaml',
-	\ $CFGPATH . 'local.plugins.yaml',
+	\ $CFGPATH . '/plugins.yaml',
+	\ $CFGPATH . '/local.plugins.yaml',
 	\ $VIMPATH . '/usr/vimrc.yaml',
 	\ $VIMPATH . '/usr/vimrc.json',
 	\ $VIMPATH .  '/vimrc.yaml',
@@ -138,9 +138,7 @@ function! s:use_dein()
 		" Use dein as a plugin manager
 		let g:dein#auto_recache = 1
 		let g:dein#install_max_processes = 12
-    let g:dein#install_progress_type = 'title'
-    let g:dein#enable_notification = v:true
-    let g:dein#lazy_rplugins = v:true
+    let g:dein#install_progress_type = 'tabline'
 		" Add dein to vim's runtimepath
 		if &runtimepath !~# '/dein.vim'
 			let s:dein_dir = l:cache_path . '/repos/github.com/Shougo/dein.vim'
